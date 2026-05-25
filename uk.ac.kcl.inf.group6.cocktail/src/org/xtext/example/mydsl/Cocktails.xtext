@@ -1,0 +1,121 @@
+grammar org.xtext.example.mydsl.Cocktails with org.eclipse.xtext.common.Terminals
+
+generate cocktails "http://www.xtext.org/example/mydsl/Cocktails"
+
+Order:
+	instructions+=Instruction*
+;
+Instruction:
+	AddIngredient|
+	AddFixedIngredient|
+	FancyStatement|
+	AddIce|
+	MuddleStatement|
+	AddDecoration|
+	MakeStatement|
+	VariableDeclaration
+	//	AddFruitformuddle |
+;
+
+
+AddIngredient:
+	"addI" name=ID ":" amount=Addition "ml"
+;
+AddFixedIngredient:
+	"addF" name=ID ":" amount=Addition "g"
+;
+
+FancyStatement:
+	"use" fcommand=FancyMakeStatement
+;
+enum FancyMakeStatement:
+	lighter|
+	co2
+;
+
+
+AddIce:
+	"addIc" ice=IceStatement ":" ounce=Addition "ounce"
+;
+enum IceStatement:
+	cube|crush|shave|block|ball|cone
+;
+MuddleStatement:
+	"mud" mudFruit+=FruitStatement* ":" mtimes=Addition "times"
+;
+enum FruitStatement:
+	lime |
+	lemon |
+	orange |
+	grapefruit |
+	pineapple |
+	mango |
+	kiwi |
+	strawberry |
+	blueberry |
+	raspberry |
+	blackberry |
+	cherry |
+	peach |
+	plum |
+	watermelon |
+	cucumber |
+	mint |
+	basil |
+	thyme |
+	ginger
+;
+
+
+AddDecoration:
+	"addD" decoration=DecorationStatement slice=Addition "slices"
+;
+enum DecorationStatement:
+	orange|
+	lemon|
+	lime|
+	olive|
+	cherry|
+	mint|
+	rose|
+	cinnamon|
+	mango|
+	grapefruit
+;
+
+MakeStatement:
+	make=MakeCommand ":" time=Addition "seconds"
+;
+enum MakeCommand:
+	stir|
+	shake|
+	blend|
+	filter
+;
+
+
+
+
+Addition returns Expression:
+	Multiplication({Addition.left=current} operator+=("+"|"-") right +=Multiplication)*
+;
+
+Multiplication returns Expression:
+	PrimaryExpression ({Multiplication.left= current} operator+=("*"|"/")right +=PrimaryExpression)*
+;
+
+PrimaryExpression returns Expression:
+	IntLiteral|
+	IntVarExpression |
+	"("Addition")"
+;
+
+IntLiteral:
+	val=INT
+;
+VariableDeclaration:
+	"var" name=ID "=" value=INT
+;
+IntVarExpression:
+	var = [VariableDeclaration]
+;

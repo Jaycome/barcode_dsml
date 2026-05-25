@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="cocktails" nsURI="http://www.xtext.org/example/mydsl/Cocktails"
+    nsPrefix="cocktails">
+  <eClassifiers xsi:type="ecore:EClass" name="Order">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="instructions" upperBound="-1"
+        eType="#//Instruction" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Instruction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AddIngredient" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="amount" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AddFixedIngredient" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="amount" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FancyStatement" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fcommand" eType="#//FancyMakeStatement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="FancyMakeStatement">
+    <eLiterals name="lighter" literal="lighter"/>
+    <eLiterals name="co2" value="1" literal="co2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AddIce" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ice" eType="#//IceStatement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ounce" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="IceStatement">
+    <eLiterals name="cube" literal="cube"/>
+    <eLiterals name="crush" value="1" literal="crush"/>
+    <eLiterals name="shave" value="2" literal="shave"/>
+    <eLiterals name="block" value="3" literal="block"/>
+    <eLiterals name="ball" value="4" literal="ball"/>
+    <eLiterals name="cone" value="5" literal="cone"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MuddleStatement" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mudFruit" unique="false"
+        upperBound="-1" eType="#//FruitStatement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mtimes" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="FruitStatement">
+    <eLiterals name="lime" literal="lime"/>
+    <eLiterals name="lemon" value="1" literal="lemon"/>
+    <eLiterals name="orange" value="2" literal="orange"/>
+    <eLiterals name="grapefruit" value="3" literal="grapefruit"/>
+    <eLiterals name="pineapple" value="4" literal="pineapple"/>
+    <eLiterals name="mango" value="5" literal="mango"/>
+    <eLiterals name="kiwi" value="6" literal="kiwi"/>
+    <eLiterals name="strawberry" value="7" literal="strawberry"/>
+    <eLiterals name="blueberry" value="8" literal="blueberry"/>
+    <eLiterals name="raspberry" value="9" literal="raspberry"/>
+    <eLiterals name="blackberry" value="10" literal="blackberry"/>
+    <eLiterals name="cherry" value="11" literal="cherry"/>
+    <eLiterals name="peach" value="12" literal="peach"/>
+    <eLiterals name="plum" value="13" literal="plum"/>
+    <eLiterals name="watermelon" value="14" literal="watermelon"/>
+    <eLiterals name="cucumber" value="15" literal="cucumber"/>
+    <eLiterals name="mint" value="16" literal="mint"/>
+    <eLiterals name="basil" value="17" literal="basil"/>
+    <eLiterals name="thyme" value="18" literal="thyme"/>
+    <eLiterals name="ginger" value="19" literal="ginger"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AddDecoration" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="decoration" eType="#//DecorationStatement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="slice" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="DecorationStatement">
+    <eLiterals name="orange" literal="orange"/>
+    <eLiterals name="lemon" value="1" literal="lemon"/>
+    <eLiterals name="lime" value="2" literal="lime"/>
+    <eLiterals name="olive" value="3" literal="olive"/>
+    <eLiterals name="cherry" value="4" literal="cherry"/>
+    <eLiterals name="mint" value="5" literal="mint"/>
+    <eLiterals name="rose" value="6" literal="rose"/>
+    <eLiterals name="cinnamon" value="7" literal="cinnamon"/>
+    <eLiterals name="mango" value="8" literal="mango"/>
+    <eLiterals name="grapefruit" value="9" literal="grapefruit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MakeStatement" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="make" eType="#//MakeCommand"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="time" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MakeCommand">
+    <eLiterals name="stir" literal="stir"/>
+    <eLiterals name="shake" value="1" literal="shake"/>
+    <eLiterals name="blend" value="2" literal="blend"/>
+    <eLiterals name="filter" value="3" literal="filter"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IntLiteral" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="val" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableDeclaration" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IntVarExpression" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="var" eType="#//VariableDeclaration"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Addition" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" upperBound="-1"
+        eType="#//Expression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Multiplication" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" upperBound="-1"
+        eType="#//Expression" containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

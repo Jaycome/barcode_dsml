@@ -1,0 +1,39 @@
+/*XPECT_SETUP uk.ac.kcl.inf.group6.cocktails.xpect.XPectTests END_SETUP */
+/*XPECT generated file TestCocktail.java---
+
+
+public class TestCocktail{
+	public static void main(String[] args){
+		int count=1;
+		System.out.println("Step"+count+":\nput 1 ounce Cube ice");
+		count++;
+		
+		System.out.println("Step"+count+":\nadd ingredient Vodka for 28 ml");
+		count++;
+		
+		System.out.println("Step"+count+":\nadd ingredient Rum for 20 ml");
+		count++;
+		
+		System.out.println("Step"+count+":\nadd ingredient Gin for 28 ml");
+		count++;
+		
+		System.out.println("Step"+count+":\nadd ingredient Tequila for 28 ml");
+		count++;
+		
+		System.out.println("Step"+count+":\nadd ingredient Sour_mix for 28 ml");
+		count++;
+		System.out.println("Step"+count+":\nShake it for 30 seconds");
+		count++;
+		
+		System.out.println("Step"+count+":\nadd ingredient Coke for 50+6 ml");
+		count++;
+		System.out.println("Step"+count+":\nStir it for 15 seconds");
+		count++;
+		System.out.println("Step"+count+":\nput Lemon 2 piece on the top of cocktail");
+		count++;
+	}
+	
+}
+
+---
+*/

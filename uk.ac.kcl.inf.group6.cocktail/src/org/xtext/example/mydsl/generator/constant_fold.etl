@@ -1,0 +1,134 @@
+rule CopyOrder 
+	transform s : Source ! Order
+	to t : Target!Order {
+	t.instructions ::= s.instructions;
+}
+rule CopyAddIngredient
+	transform s:Source!AddIngredient
+	to t:Target!AddIngredient{
+	
+	guard:
+		//apply when there is no AddIngredient before this
+		(s.eContainer().instructions.indexOf(s)=0)or
+		(not s.eContainer().instructions.get(s.eContainer().instructions.indexOf(s)-1).isTypeOf(Source!AddIngredient))or
+		(not (s.eContainer().instructions.get(s.eContainer().instructions.indexOf(s)-1).name=s.name))
+	t.name=s.name;
+	
+	var container=s.eContainer();
+	var cmdIndex=container.instructions.indexOf(s);
+	var isLast=(cmdIndex=container.instructions.size()-1);
+	
+	if(not isLast){
+		var nextInstruction=container.instructions.get(cmdIndex+1);
+		
+		if (nextInstruction.isTypeOf(Source!AddIngredient)and (nextInstruction.name=s.name)){
+			t.amount= new Target!Addition;
+			t.amount.left::=s.amount;
+			
+			
+			while ((not isLast)and nextInstruction.isTypeOf(Source!AddIngredient)){
+				t.amount.operator.add("+");
+				t.amount.right.add(nextInstruction.amount.equivalent());
+				
+				cmdIndex+=1;
+				isLast=(cmdIndex=container.instructions.size()-1);
+				if(not isLast){
+					nextInstruction=container.instructions.get(container.instructions.indexOf(nextInstruction)+1);
+				}
+			}
+			
+		}else{
+			t.amount::=s.amount;
+		}
+	}else{
+		t.amount::=s.amount;
+		
+	}
+}
+rule CopyAddFixedIngredient
+	transform s:Source!AddFixedIngredient
+	to t:Target!AddFixedIngredient{
+	t.name=s.name;
+	t.amount::=s.amount;
+	}
+rule CopyFancyStatement
+	transform s:Source!FancyStatement
+	to t:Target!FancyStatement{
+	t.fcommand=s.fcommand;
+	}
+rule CopyAddIce
+	transform s:Source!AddIce
+	to t:Target!AddIce{
+	t.ice=s.ice;
+	t.ounce::=s.ounce;
+}
+rule CopyMuddleStatement
+	transform s:Source!MuddleStatement
+	to t:Target!MuddleStatement{
+	t.mudFruit=s.mudFruit;
+	t.mtimes::=s.mtimes;
+	}
+rule CopyAddDecoration
+	transform s:Source!AddDecoration
+	to t:Target!AddDecoration{
+	t.decoration=s.decoration;
+	t.slice::=s.slice;
+	}
+rule CopyMakeStatement
+	transform s:Source!MakeStatement
+	to t:Target!MakeStatement{
+	t.make=s.make;
+	t.time::=s.time;
+	}
+rule CopyVariableDeclaration 
+	transform s : Source!VariableDeclaration
+	to t : Target!VariableDeclaration{
+	t.name=s.name;
+	t.value=s.value;
+}
+
+
+@lazy
+rule FoldIntLiteral 
+	transform s :Source!IntLiteral
+	to t : Target!IntLiteral {
+	t.val=s.val;
+}
+@lazy
+rule FoldIntAddition
+	transform s:Source!Addition
+	to t:Target!IntLiteral{
+		
+		guard:s.left.equivalent().isKindOf(Target!IntLiteral)and
+			  s.right.equivalent().forAll(it|it.isKindOf(Target!IntLiteral))
+			  
+		t.val=s.foldAsInteger();
+	}
+@lazy
+rule FoldIntMultiplication
+	transform s:Source!Multiplication
+	to t:Target!IntLiteral{
+		
+		guard:s.left.equivalent().isKindOf(Target!IntLiteral)and
+			  s.right.equivalent().forAll(it|it.isKindOf(Target!IntLiteral))
+			  
+		t.val=s.foldAsInteger();
+	}
+	
+operation Source!Expression foldAsInteger () : Integer{
+	var result=self.left.equivalent().val.asInteger();
+	
+	for(idx in 0.`to`(self.right.size()-1)){
+		if(self.operator.at(idx)=='+'){
+			result=result+self.right.at(idx).val.asInteger();
+		}else if(self.operator.at(idx)=='-'){
+			result=result-self.right.at(idx).val.asInteger();
+		}else if(self.operator.at(idx)=='*'){
+			result=result*self.right.at(idx).val.asInteger();
+		}else if(self.operator.at(idx)=='/'){
+			result=result/self.right.at(idx).val.asInteger();
+		}
+	}
+	return result;
+
+}

@@ -1,0 +1,10 @@
+addIc cube : 1 ounce
+addI vodka: 28 ml
+addI rum : 20 ml
+addI gin: 28 ml
+addI tequila: 28 ml
+addI sour_mix:28ml
+shake : 30 seconds
+addI coke : 56ml
+stir : 15 seconds
+addD lemon 3 slices
