@@ -1,0 +1,22 @@
+/*
+ * Sample Barcode DSML file.
+ *
+ * IMPORTANT:
+ * This is documentation-oriented pseudo-syntax.
+ * Please update this file to match the exact grammar used in the Xtext project.
+ */
+
+recipe "Gin Sour" {
+  ingredient gin 50 ml
+  ingredient lemon_juice 25 ml
+  ingredient sugar_syrup 15 ml
+  ingredient ice 1 scoop
+
+  step add gin
+  step add lemon_juice
+  step add sugar_syrup
+  step add ice
+  step shake 10 seconds
+  step strain into "coupe glass"
+  step serve
+}
