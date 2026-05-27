@@ -1,0 +1,30 @@
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Eclipse
+.metadata/
+.settings/
+.project
+.classpath
+bin/
+target/
+
+# Xtext / EMF generated artifacts
+xtend-gen/
+src-gen/
+model/generated/
+
+# Gradle / Maven
+.gradle/
+build/
+target/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
