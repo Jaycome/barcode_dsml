@@ -37,6 +37,50 @@ Although the domain example is cocktail preparation, the same approach can be ap
 
 ---
 
+## Example
+
+A recipe written in the DSL (`test.cocktails`):
+
+```text
+addIc cube : 1 ounce
+addI vodka : 28 ml
+addI sour_mix : 28 ml
+shake : 30 seconds
+addD lemon 3 slices
+```
+
+The generator turns each file into a Java class (`TestCocktail.java` here) that prints the preparation steps:
+
+```text
+Step1:
+put 1 ounce Cube ice
+Step2:
+add ingredient Vodka for 28 ml
+Step3:
+add ingredient Sour_mix for 28 ml
+Step4:
+Shake it for 30 seconds
+Step5:
+put Lemon 3 piece on the top of cocktail
+```
+
+Language summary:
+
+| Statement | Syntax |
+|---|---|
+| Liquid ingredient | `addI <name> : <amount> ml` |
+| Solid ingredient | `addF <name> : <amount> g` |
+| Ice | `addIc cube\|crush\|shave\|block\|ball\|cone : <amount> ounce` |
+| Muddle fruit or herbs | `mud <fruit>... : <amount> times` |
+| Technique | `stir\|shake\|blend\|filter : <amount> seconds` |
+| Effect | `use lighter\|co2` |
+| Garnish | `addD <decoration> <amount> slices` |
+| Variable | `var <name> = <int>` |
+
+Amounts are integer expressions with `+ - * /`, parentheses and variables. The validator warns about ingredient names that are not lower case or not in the known ingredient list. Before generation, an ETL transformation (`generator/constant_fold.etl`) merges consecutive additions of the same ingredient into one step.
+
+---
+
 ## Tech Stack
 
 - Java
@@ -77,3 +121,17 @@ barcode_dsml/
 ├── LICENSE
 ├── .gitignore
 └── README.md
+
+---
+
+## Building and Running
+
+1. Install Eclipse IDE for Java and DSL Developers (Xtext 2.29 or later, Java 17).
+2. Import the projects: **File → Import → Existing Projects into Workspace**, select the repository root.
+3. Generate the language infrastructure: run `uk.ac.kcl.inf.group6.cocktail/src/org/xtext/example/mydsl/GenerateCocktails.mwe2` (**Run As → MWE2 Workflow**, or the `Generate Cocktails (cocktails) Language Infrastructure` launch configuration). Generated sources (`src-gen/`, `xtend-gen/`, `model/generated/`) are not committed; this step recreates them. On the first run Xtext asks to download the ANTLR generator jar; answer `y`.
+4. Run the tests: **Run As → JUnit Test** on `uk.ac.kcl.inf.group6.cocktail.tests`.
+5. Try the editor: start `Launch Runtime Eclipse` and open `2023-cocktails-runtime-EclipseApplication/TestCocktails/src/test.cocktails`. Saving the file generates the Java class.
+
+## License
+
+Released under the MIT License. See [LICENSE](LICENSE).
