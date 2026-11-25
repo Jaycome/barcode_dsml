@@ -4,10 +4,10 @@
 *.war
 *.ear
 
-# Eclipse
+# Eclipse (project .settings/ stay tracked: they set Java 17 and UTF-8 for import)
 .metadata/
-.settings/
 bin/
+test-bin/
 target/
 
 # Xtext / EMF generated artifacts
